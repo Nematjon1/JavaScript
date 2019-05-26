@@ -24,4 +24,31 @@ function invokeMax(fn, num) {
     return fn.apply(this, arguments);
   };
 }
+function once(fn, thisArg) {
+  let hasBeenCalled = false;
+  return function() {
+    if(!hasBeenCalled) {
+      hasBeenCalled = true;
+      return fn.apply(thisArg, arguments);
+    };
+  };
+}
+
+function bind() {
+  let outerArgs = [].slice.call(arguments, 2);
+  return function() {
+    let innerArgs = [].slice.call(arguments);
+    let allArgs = outerArgs.concat(innerArgs);
+    return fn.apply(thisArg, allArgs);
+  };
+}
+
+function flip(fn, thisArgs) {
+  let outerArgs = [].slice.call(arguments, 2);
+  return function() {
+    let innerArgs = [].slice.call(arguments);
+    let allArgs = outerArgs.concat(innerArgs).slice(0, fn.length);
+    return fn.apply(thisArgs, allArgs.reverse());
+  };
+}
 
